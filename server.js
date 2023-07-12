@@ -48,24 +48,23 @@ app.get('/register', function (req, res) {
     const id = q.id;
     const privilege = q.privilege;
     const password = q.password;
-    var bool_key = false;
-    var bool_name = false;
+    var bool_error = true;
     if(stunum != null && stunum.length == 4 && id != null && privilege != null && password != null && password != null) {
         connection.query('SELECT `key` FROM users WHERE `key`=' + gisu + stunum, function (err, result) {
             if (err) throw err;
             if(result.length > 0) {
-                bool_key = true;
+                bool_error = true;
                 res.json('Same_Key_Exists');
             }
         });
         connection.query('SELECT name FROM users WHERE name=\'' + id + '\'', function(err, result) {
             if (err) throw err;
-            if(bool_key == false && result.length > 0) { 
-                bool_name = true;
+            if(bool_error == false && result.length > 0) { 
+                bool_error = true;
                 res.json('Same_ID_Exists');
             }
         })
-        if(bool_name == false && bool_key == false) {
+        if(!bool_error) {
             connection.query('INSERT INTO users VALUES (' + gisu + stunum + ', \'' + id + '\', ' + privilege + ', ' + password + ');', function (err, result) {
                 if (err) throw err;
                 res.json('Successfully_Registered');
