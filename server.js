@@ -60,7 +60,7 @@ app.get('/register', function (req, res) {
         });
         connection.query('SELECT name FROM users WHERE name=\'' + id + '\'', function(err, result) {
             if (err) throw err;
-            if(result.length > 0) { 
+            if(bool_key == false && result.length > 0) { 
                 bool_name = true;
                 res.json('Same_ID_Exists');
             }
