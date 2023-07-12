@@ -8,17 +8,17 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const connection = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
+    host: '210.114.22.146',
+    user: 'root',
+    password: 'ishs123!',
     database: 'test'
 });
 
 
 var options = {
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
+    host: '210.114.22.146',
+    user: 'root',
+    password: 'ishs123!',
     database: 'sessions'
 };
 
@@ -33,7 +33,7 @@ connection.connect(function (err) {
 
 
 app.use(session({
-    secret: process.env.SECRET,
+    secret: 'WwAaSsDdQqEeFf!@#$',
     resave: false,
     saveUninitialized: true,
     HttpOnly: true,
