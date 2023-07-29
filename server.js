@@ -4,8 +4,10 @@ const mysql = require('mysql2');
 var session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const dotenv = require('dotenv');
+const cors = require('cors');
 
 dotenv.config();
+app.use(cors());
 
 const connection = mysql.createConnection({
     host: '210.114.22.146',
