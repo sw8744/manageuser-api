@@ -9,7 +9,7 @@ const cors = require('cors');
 dotenv.config();
 app.use(cors());
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
     host: '210.114.22.146',
     user: 'root',
     password: 'ishs123!',
