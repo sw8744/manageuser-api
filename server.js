@@ -9,11 +9,12 @@ const cors = require('cors');
 dotenv.config();
 app.use(cors());
 
-const pool = mysql.createPool({
+const connection = mysql.createConnection({
     host: '210.114.22.146',
     user: 'root',
     password: 'ishs123!',
-    database: 'test'
+    database: 'test',
+    enableKeepAlive: true
 });
 
 
@@ -26,7 +27,7 @@ var options = {
 
 var sessionStore = new MySQLStore(options);
 
-pool.getConnection(function (err, connection) {
+connection.connect(function (err) {
     if (err) throw err;
     else {
         console.log('Successfully Connected');
@@ -52,7 +53,6 @@ app.get('/register', function (req, res) {
     const password = q.password;
     var bool_error = true;
     if(gisu != undefined && stunum != undefined && id != undefined && privilege != undefined && password != undefined) {
-        pool.getConnection(function (err, connection) {
             if(stunum != null && stunum.length == 4 && id != null && privilege != null && password != null && password != null) {
                 connection.query('SELECT `key` FROM users WHERE `key`=' + gisu + stunum, function (err, result) {
                     if (err) throw err;
@@ -78,11 +78,11 @@ app.get('/register', function (req, res) {
             else {
                 res.json('Error');
             }
-        });
     }
     else {
         res.json('Error');
     }
+    
 });
 
 app.get('/login', function(req, res) {
@@ -90,7 +90,6 @@ app.get('/login', function(req, res) {
     const id = q.id;
     const pw = q.password;
     if(id != undefined && pw != undefined) {
-        pool.getConnection(function(err, connection) {
             connection.query('SELECT * FROM users WHERE name=\'' + id + '\'', function(err, result) {
             if (err) throw err;
             if(result.length != 0) {
@@ -109,7 +108,6 @@ app.get('/login', function(req, res) {
                 res.json('ID_Not_Exists');
             }
         });
-    });
     }
     else {
         res.json('Error');
